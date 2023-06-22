@@ -28,6 +28,7 @@ class Player{
 
     update(){
         this.draw()
+        this.position.x += this.velocity.x;
         this.position.y += this.velocity.y;
 
         if(this.position.y + this.height + this.velocity.y<= canvas.height){
@@ -39,11 +40,83 @@ class Player{
 }
 
 const player = new Player()
+const keys = {
+    right:{
+        pressed:false
+    },
+    left:{
+        pressed:false
+    }
+}
 
 function animate (){
     requestAnimationFrame(animate)
     context.clearRect(0, 0, canvas.width, canvas.height)
     player.update()
+
+    if (keys.right.pressed){
+        player.velocity.x=5
+    } else if (keys.left.pressed){
+        player.velocity.x= -5
+    }
+       else player.velocity.x=0
 }
 
 animate()
+
+addEventListener('keydown', (event) => {
+    const keyCode = event.key.charCodeAt(0);
+    // console.log(keyCode)
+  
+    switch(keyCode){
+        case 97:
+            console.log('left')
+            keys.left.pressed=true
+            break;
+
+            case 115:
+                console.log('down')
+                break;
+                case 116:
+                    console.log('right')
+                   keys.right.pressed=true
+                    break;
+                    case 119:
+                        console.log('up')
+                        player.velocity.y -= 10
+                        break;
+
+        
+    }
+    console.log(keys.right.pressed)
+  });
+
+  addEventListener('keyup', (event) => {
+    const keyCode = event.key.charCodeAt(0);
+    // console.log(keyCode)
+  
+    switch(keyCode){
+        case 97:
+            console.log('left')
+            keys.left.pressed=false
+            break;
+
+            case 115:
+                console.log('down')
+                break;
+                case 116:
+                    console.log('right')
+                    keys.right.pressed=false
+                   
+                    break;
+                    case 119:
+                        console.log('up')
+                        player.velocity.y -= 10
+                        break;
+
+        
+    }
+    console.log(keys.right.pressed)
+  });
+
+
